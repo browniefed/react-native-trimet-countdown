@@ -1,0 +1,12 @@
+{
+  "name": "react_bus",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "react-native": "facebook/react-native#0.8-stable",
+    "socket.io-client": "^1.3.5"
+  }
+}
