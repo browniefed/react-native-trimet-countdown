@@ -1,5 +1,5 @@
 var React = require('react-native');
-
+var _ = require('lodash')
 var HomeView = require('./views/HomeView');
 var Storage = require('./Storage');
 
@@ -18,29 +18,36 @@ var {
 var Application = React.createClass({
     getInitialState: function() {
         return {
-            stops: [],
+            stops: {},
             text: ''
         };
     },
     componentWillMount: function() {
         var socket = io('http://localhost:8080');
         socket.emit('follow_stop', {stop: 8374, routeId: 100});
+
         socket.on('postion_update', function(data) {
-            this.setState({
-                text: data
-            })
-        }.bind(this))
-        //get stuff from storage
-        Storage.getStops(function(stops) {
-            this.setState({
-                stops: stops || []
-            });
+            this.state.stops[data.stopId] = _.extend({},this.state.stops[data.stopId],data);
+            this.setState(this.state);
         }.bind(this));
+
+        socket.on('stop_info', function(data) {
+            this.state.stops[data.stopId] = _.extend({},this.state.stops[data.stopId],data);
+            this.setState(this.state);
+        }.bind(this))
+
+    },
+    getStops: function() {
+        return _.map(this.state.stops, function(stop) {
+            return (
+                <Text>{stop.stopId} - {stop.name} - {stop.position}</Text>
+            );
+        });
     },
     render: function() {
         return (
             <View style={{alignItems: 'center', justifyContent: 'center', flex:1 }}>
-                <Text>{this.state.text}</Text>
+                {this.getStops()}
             </View>
         );
     }
