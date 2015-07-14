@@ -1,6 +1,6 @@
 var React = require('react-native');
-var PositionView = require('./../components/PositionView');
-
+var PositionCard = require('./../components/PositionCard');
+var _ = require('lodash');
 var {
     View,
     Text,
@@ -10,15 +10,20 @@ var {
 var HomeView = React.createClass({
     getDefaultProps: function() {
         return {
-            stops: []
+            stops: {}
         };
+    },
+    getStops() {
+        return _.map(this.props.stops, function(stop) {
+            return (
+                <PositionCard {...stop} />
+            )
+        })
     },
     render: function() {
         return (
             <View>
-                <ScrollView>
-                    {this.props.stops.map((stop)=>(<PositionView {...stop} />))}
-                </ScrollView>
+                {this.getStops()}
             </View>
         );
     }
