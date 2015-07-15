@@ -3,7 +3,8 @@ var _ = require('lodash');
 var Circle = require('./Circle');
 
 var {
-    View
+    View,
+    StyleSheet
 } = React;
 
 var PositionCircles = React.createClass({
@@ -21,12 +22,19 @@ var PositionCircles = React.createClass({
     },
     render: function() {
         return (
-            <View>
+            <View style={styles.circles}>
                 {this.getCircles(this.props.position)}
             </View>
         );
     }
-
 });
 
+var styles = StyleSheet.create({
+    circles: {
+        flex: 1,
+        alignItems: 'flex-start',
+        flexDirection: 'row',
+        flexWrap: 'nowrap'
+    }
+})
 module.exports = PositionCircles;

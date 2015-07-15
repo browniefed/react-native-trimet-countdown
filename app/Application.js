@@ -25,12 +25,13 @@ var Application = React.createClass({
     componentWillMount: function() {
         var socket = io('http://localhost:8080');
         socket.emit('follow_stop', {stop: 8374, routeId: 100});
+        socket.emit('follow_stop', {stop: 8336, routeId: 90});
         socket.on('postion_update', this.updateStopInfo);
         socket.on('stop_info', this.updateStopInfo);
     },
     updateStopInfo(data) {
-            this.state.stops[data.stopId] = _.extend({}, this.state.stops[data.stopId], data);
-            this.setState(this.state);
+        this.state.stops[data.stopId] = _.extend({}, this.state.stops[data.stopId], data);
+        this.setState(this.state);
     },
     render: function() {
         return (

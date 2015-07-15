@@ -9,8 +9,7 @@ var PositionTitle = React.createClass({
     render: function() {
         return (
             <View>
-                <Text>{this.props.id}</Text>
-                <Text>{this.props.name}</Text>
+                <Text>{this.props.id} - {this.props.name}</Text>
             </View>
         );
     }
