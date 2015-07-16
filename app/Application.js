@@ -7,6 +7,7 @@ var Storage = require('./Storage');
 window.navigator.userAgent = 'react-native';
 
 var io = require('socket.io-client/socket.io');
+var Immutable = require('immutable');
 
 var {
     View,
@@ -18,7 +19,7 @@ var {
 var Application = React.createClass({
     getInitialState: function() {
         return {
-            stops: {},
+            stops: Immutable.Map({}),
             text: ''
         };
     },
@@ -36,17 +37,32 @@ var Application = React.createClass({
         });
     },
     updateStopInfo(data) {
-        this.state.stops[data.routeId + '_' + data.stopId] = _.extend({}, this.state.stops[data.routeId + '_' + data.stopId], data);
+        var map = this.state.stops.get(data.routeId + '_' + data.stopId);
+        var stops;
+
+        if (map) {
+            stops = this.state.stops.set(data.routeId + '_' + data.stopId, map.merge(data));
+        } else {
+            stops = this.state.stops.set(data.routeId + '_' + data.stopId, Immutable.Map(data));
+        }
+        
+        this.state.stops = stops;
         this.setState(this.state);
     },
     render: function() {
         return (
-            <View style={{alignItems: 'center', justifyContent: 'center', flex:1 }}>
-                <HomeView stops={this.state.stops} />
+            <View style={styles.container}>
+                <HomeView stops={this.state.stops.toJS()} />
             </View>
         );
     }
 
 });
+
+var styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
 
 module.exports = Application;

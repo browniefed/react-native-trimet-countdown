@@ -3,7 +3,8 @@ var PositionCircles = require('./PositionCircles');
 var PositionTitle = require('./PositionTitle');
 var {
     View,
-    Text
+    Text,
+    StyleSheet
 } = React;
 
 var PositionCard = React.createClass({
@@ -16,7 +17,7 @@ var PositionCard = React.createClass({
     },
     render: function() {
         return (
-            <View>
+            <View style={styles.container}>
                 <PositionTitle 
                     name={this.props.name} 
                     id={this.props.stopId} 
@@ -27,7 +28,12 @@ var PositionCard = React.createClass({
             </View>
         );
     }
-
 });
+
+var styles = StyleSheet.create({
+    container: {
+        flex: 1
+    }
+})
 
 module.exports = PositionCard;
