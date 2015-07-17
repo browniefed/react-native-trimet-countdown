@@ -4,10 +4,16 @@ var {
     View,
     Text,
     TextInput,
-    StyleSheet
+    StyleSheet,
+    TouchableOpacity
 } = React;
 
 var AddRoute = React.createClass({
+    getDefaultProps: function() {
+        return {
+            onAdd: function() {}
+        };
+    },
     getInitialState: function() {
         return {
             value: '' 
@@ -18,18 +24,36 @@ var AddRoute = React.createClass({
             value: text
         })
     },
+    handleAdd: function() {
+        this.props.onAdd(this.state.value);
+
+        this.setState({
+            value: ''
+        });
+    },
     render: function() {
         return (
             <View style={styles.container}>
-                <Text style={styles.searchText}>Search...</Text>
-                <TextInput 
-                    style={styles.input} 
-                    value={this.state.value}
-                    onChangeText={this.handleChangeText}
-                    placeholder="Search by Stop ID"
-                    returnKeyType="search"
-                    keyboardType="numeric"
-                />
+                <View style={{flex: 3}}>
+                    <TextInput 
+                        ref="input"
+                        style={styles.input} 
+                        value={this.state.value}
+                        onChangeText={this.handleChangeText}
+                        placeholder="Search by Stop ID"
+                        returnKeyType="search"
+                        keyboardType="numeric"
+                        onSubmitEditing={this.handleAdd}
+                    />
+                </View>
+                <TouchableOpacity onPress={this.handleAdd}>
+                    <View style={styles.addButton}>
+                        <Text style={styles.addButtonText}>
+                            Add Stop
+                        </Text>
+                    </View>
+                </TouchableOpacity>
+
             </View>
         );
     }
@@ -37,16 +61,23 @@ var AddRoute = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-        flexDirection: 'column',
-        flex: 1
+        flexDirection: 'row',
+        flex: 1,
+        justifyContent: 'center'
     },
-    searchText: {
-        flex: 1
+    addButton: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5,
+        borderWidth
+        : 1,
+        borderColor: '#000'
     },
     input: {
         borderColor: '#000',
         borderWidth: 1,
-        height: 40,
         flex: 1,
         padding: 5
     }

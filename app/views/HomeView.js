@@ -15,7 +15,8 @@ var {
 var HomeView = React.createClass({
     getDefaultProps: function() {
         return {
-            stops: {}
+            stops: {},
+            onAdd: function() {}
         };
     },
     getInitialState: function() {
@@ -36,7 +37,9 @@ var HomeView = React.createClass({
         return (
             <View style={styles.container}>
                 <View style={styles.addRoute}>
-                    <AddRoute />
+                    <AddRoute 
+                        onAdd={this.props.onAdd}
+                    />
                 </View>
                 <View style={styles.activeStops}>
                     <StopsList 

@@ -24,12 +24,14 @@ var Application = React.createClass({
         };
     },
     componentWillMount: function() {
-        var socket = io('http://localhost:5000');
-        socket.emit('follow_stop', {stop: 8374, routeId: 100});
-        socket.emit('follow_stop', {stop: 8336, routeId: 100});
-        socket.emit('follow_stop', {stop: 8336, routeId: 90});
-        socket.on('postion_update', this.updateStopInfo);
-        socket.on('stop_info', this.updateStopInfo);
+        this.socket = io('http://localhost:5000');
+        
+        this.socket.emit('follow_stop', {stop: 8374, routeId: 100});
+        this.socket.emit('follow_stop', {stop: 8336, routeId: 100});
+        this.socket.emit('follow_stop', {stop: 8336, routeId: 90});
+        
+        this.socket.on('postion_update', this.updateStopInfo);
+        this.socket.on('stop_info', this.updateStopInfo);
 
         
         Storage.getStops(function(stops) {
@@ -49,10 +51,16 @@ var Application = React.createClass({
         this.state.stops = stops;
         this.setState(this.state);
     },
+    handleAdd: function(stopId) {
+
+    },
     render: function() {
         return (
             <View style={styles.container}>
-                <HomeView stops={this.state.stops.toJS()} />
+                <HomeView 
+                    stops={this.state.stops.toJS()} 
+                    onAdd={this.handleAdd}
+                />
             </View>
         );
     }
