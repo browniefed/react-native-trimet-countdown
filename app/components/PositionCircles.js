@@ -13,17 +13,20 @@ var PositionCircles = React.createClass({
             position: -1
         };
     },
-    getCircles: function(position) {
+    getCircles: function(position, color) {
         return _.map(_.range(0,8).reverse(), function(v) {
             return (
-                <Circle filled={v == position} />
+                <Circle 
+                    filled={v == position}
+                    circleColor={color}
+                />
             )
         });
     },
     render: function() {
         return (
             <View style={styles.circles}>
-                {this.getCircles(this.props.position)}
+                {this.getCircles(this.props.position, this.props.circleColor)}
             </View>
         );
     }

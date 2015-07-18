@@ -69,7 +69,7 @@ var HomeView = React.createClass({
                                 return (
                                     <TouchableOpacity onPress={_.bind(this.addStopAndRoute, this, this.state.results.locid, route)}>
                                         <View style={styles.routeResult}>
-                                            <Text style={styles.routeResultText}>{StopMap[route] || 'Route ' + route}</Text>
+                                            <Text style={styles.routeResultText}>{(StopMap[route] && StopMap[route].text) || 'Route ' + route}</Text>
                                         </View>
                                     </TouchableOpacity>
                                 )

@@ -12,7 +12,8 @@ var PositionCard = React.createClass({
         return {
             name: '',
             stopId: '',
-            position: -1
+            position: -1,
+            circleColor: '#000'
         };
     },
     render: function() {
@@ -23,6 +24,7 @@ var PositionCard = React.createClass({
                     id={this.props.stopId} 
                 />
                 <PositionCircles
+                    circleColor={this.props.circleColor}
                     position={this.props.position}
                 />
             </View>

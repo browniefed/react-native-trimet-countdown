@@ -15,7 +15,7 @@ var Circle = React.createClass({
             backgroundColor: 'transparent'
         }
         if (this.props.filled) {
-            style.backgroundColor = '#000000';
+            style.backgroundColor = this.props.circleColor;
         }
         return style;
     },

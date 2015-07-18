@@ -2,6 +2,7 @@ var React = require('react-native');
 var _ = require('lodash')
 var HomeView = require('./views/HomeView');
 var Storage = require('./Storage');
+var Colors = require('./Colors');
 
 // HACK FOR SOCKET IO
 window.navigator.userAgent = 'react-native';

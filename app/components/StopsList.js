@@ -1,5 +1,6 @@
 var React = require('react-native');
 var PositionCard = require('./PositionCard');
+var StopMap = require('../StopMap');
 
 var {
     View,
@@ -9,9 +10,16 @@ var {
 var StopsList = React.createClass({
 
     renderRow(rowData, sectionID, rowID) {
+        var circleColor;
+        
+        if (StopMap[rowData.routeId]) {
+            circleColor = StopMap[rowData.routeId].color;
+        }
+
         return (
             <PositionCard
                 {...rowData}
+                circleColor={circleColor}
             />
         )
     },
