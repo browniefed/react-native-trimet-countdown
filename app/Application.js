@@ -26,9 +26,9 @@ var Application = React.createClass({
     componentWillMount: function() {
         this.socket = io('http://localhost:5000');
         
-        this.socket.emit('follow_stop', {stop: 8374, routeId: 100});
-        this.socket.emit('follow_stop', {stop: 8336, routeId: 100});
-        this.socket.emit('follow_stop', {stop: 8336, routeId: 90});
+        // this.socket.emit('follow_stop', {stop: 8374, routeId: 100});
+        // this.socket.emit('follow_stop', {stop: 8336, routeId: 100});
+        // this.socket.emit('follow_stop', {stop: 8336, routeId: 90});
         
         this.socket.on('postion_update', this.updateStopInfo);
         this.socket.on('stop_info', this.updateStopInfo);

@@ -11,49 +11,19 @@ var {
 var AddRoute = React.createClass({
     getDefaultProps: function() {
         return {
-            onAdd: function() {}
+            onChangeText: function() {}
         };
     },
-    getInitialState: function() {
-        return {
-            value: '' 
-        };
-    },
-    handleChangeText: function(text) {
-        this.setState({
-            value: text
-        })
-    },
-    handleAdd: function() {
-        this.props.onAdd(this.state.value);
 
-        this.setState({
-            value: ''
-        });
-    },
     render: function() {
         return (
             <View style={styles.container}>
-                <View style={{flex: 3}}>
+                <View style={styles.inputWrap}>
                     <TextInput 
-                        ref="input"
-                        style={styles.input} 
-                        value={this.state.value}
-                        onChangeText={this.handleChangeText}
-                        placeholder="Search by Stop ID"
-                        returnKeyType="search"
-                        keyboardType="numeric"
-                        onSubmitEditing={this.handleAdd}
+                        style={styles.input}
+                        {...this.props}
                     />
                 </View>
-                <TouchableOpacity onPress={this.handleAdd}>
-                    <View style={styles.addButton}>
-                        <Text style={styles.addButtonText}>
-                            Add Stop
-                        </Text>
-                    </View>
-                </TouchableOpacity>
-
             </View>
         );
     }
@@ -65,15 +35,8 @@ var styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center'
     },
-    addButton: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: 5,
-        borderWidth
-        : 1,
-        borderColor: '#000'
+    inputWrap: {
+        flex: 1
     },
     input: {
         borderColor: '#000',
