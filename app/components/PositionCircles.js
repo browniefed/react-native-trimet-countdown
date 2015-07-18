@@ -10,14 +10,14 @@ var {
 var PositionCircles = React.createClass({
     getDefaultProps: function() {
         return {
-            position: -1
+            position: []
         };
     },
     getCircles: function(position, color) {
         return _.map(_.range(0,8).reverse(), function(v) {
             return (
                 <Circle 
-                    filled={v == position}
+                    filled={_.contains(position, v)}
                     circleColor={color}
                 />
             )

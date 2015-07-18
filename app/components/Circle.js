@@ -29,11 +29,11 @@ var Circle = React.createClass({
 
 var styles = StyleSheet.create({
     circle: {
-        borderRadius: 10,
-        borderWidth: 1,
-        borderColor: '#CCCCCC',
-        width: 20,
-        height: 20,
+        borderRadius: 15,
+        borderWidth: 5,
+        borderColor: '#f9f9f9',
+        width: 30,
+        height: 30,
         margin: 2
     }
 });
