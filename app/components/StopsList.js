@@ -9,7 +9,6 @@ var {
 var StopsList = React.createClass({
 
     renderRow(rowData, sectionID, rowID) {
-        console.log(rowData);
         return (
             <PositionCard
                 {...rowData}
