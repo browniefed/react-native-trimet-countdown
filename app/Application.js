@@ -8,7 +8,7 @@ window.navigator.userAgent = 'react-native';
 
 var io = require('socket.io-client/socket.io');
 var Immutable = require('immutable');
-
+var _ = require('lodash');
 var {
     View,
     Text,
@@ -25,13 +25,16 @@ var Application = React.createClass({
     },
     componentWillMount: function() {
         this.socket = io('http://localhost:5000');
-        
-        // this.socket.emit('follow_stop', {stop: 8374, routeId: 100});
-        // this.socket.emit('follow_stop', {stop: 8336, routeId: 100});
-        // this.socket.emit('follow_stop', {stop: 8336, routeId: 90});
-        
         this.socket.on('postion_update', this.updateStopInfo);
         this.socket.on('stop_info', this.updateStopInfo);
+
+        Storage.getStops(_.bind(function(_stops) {
+            var stops = _stops || [];
+            _.each(stops, function(stop) {
+                this.registerStop(stop.stop, stop.route);
+            }, this);
+
+        }, this))
     },
     updateStopInfo: function(data) {
         var map = this.state.stops.get(data.routeId + '_' + data.stopId);
@@ -46,8 +49,15 @@ var Application = React.createClass({
         this.state.stops = stops;
         this.setState(this.state);
     },
-    handleAdd: function(stopId, routeId) {
+    registerStop: function(stopId, routeId) {
         this.socket.emit('follow_stop', {stop: stopId, routeId: routeId});
+    },
+    handleAdd: function(stopId, routeId) {
+        this.registerStop(stopId, routeId);
+        Storage.addStop({
+            stop: stopId,
+            route: routeId
+        });
     },
     render: function() {
         return (
