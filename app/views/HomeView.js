@@ -12,7 +12,8 @@ var {
     ScrollView,
     StyleSheet,
     ListView,
-    LayoutAnimation
+    LayoutAnimation,
+    TouchableOpacity
 } = React;
 
 var HomeView = React.createClass({
@@ -25,7 +26,7 @@ var HomeView = React.createClass({
     getInitialState: function() {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         return {
-          dataSource: ds.cloneWithRows(this.getRows()),
+          dataSource: ds.cloneWithRows(this.props.stops),
           value: '',
           results: {}
         };
@@ -34,9 +35,6 @@ var HomeView = React.createClass({
         this.setState({
             dataSource: this.state.dataSource.cloneWithRows(nextProps.stops)
         });
-    },
-    getRows: function() {
-        return this.props.stops;
     },
     handleChangeText: function(text) {
         this.setState({
@@ -53,19 +51,31 @@ var HomeView = React.createClass({
             })
         }
     },
+    addStopAndRoute: function(stopId, routeId) {
+        this.props.onAdd(stopId, routeId);
+        this.setState({
+            results: {},
+            value: ''
+        });
+    },
     getLowerView: function() {
-        if (!_.isEmpty(this.state.results)) {
-
+        if (!_.isEmpty(this.state.results) && this.state.value) {
             return (
                 <View style={styles.lower} key="results">
-                    <Text>{this.state.results.desc}</Text>
-                    {
-                        _.map(this.state.results.routes, function(route) {
-                            return (
-                                <Text>{StopMap[route] || 'Route ' + route}</Text>
-                            )
-                        })
-                    }
+                    <Text style={styles.title}>{this.state.results.desc}</Text>
+                    <View style={styles.results}>
+                        {
+                            _.map(this.state.results.routes, function(route) {
+                                return (
+                                    <TouchableOpacity onPress={_.bind(this.addStopAndRoute, this, this.state.results.locid, route)}>
+                                        <View style={styles.routeResult}>
+                                            <Text style={styles.routeResultText}>{StopMap[route] || 'Route ' + route}</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                )
+                            }, this)
+                        }
+                    </View>
                 </View>
             )
 
@@ -91,10 +101,7 @@ var HomeView = React.createClass({
                         returnKeyType="search"
                     />
                 </View>
-                {
-                    this.getLowerView()
-                }
-
+                {this.getLowerView()}
             </View>
         );
     }
@@ -112,6 +119,26 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
         marginBottom: 20
     },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    routeResult: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#000',
+        marginBottom: 5,
+        height: 50
+    },
+    routeResultText: {
+        fontSize: 15
+    },
+    results: {
+        flexDirection: 'column',
+        flex: 1
+    },
+
     lower: {
         flex: 10,
         flexDirection: 'column'

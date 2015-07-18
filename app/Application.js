@@ -32,13 +32,8 @@ var Application = React.createClass({
         
         this.socket.on('postion_update', this.updateStopInfo);
         this.socket.on('stop_info', this.updateStopInfo);
-
-        
-        Storage.getStops(function(stops) {
-
-        });
     },
-    updateStopInfo(data) {
+    updateStopInfo: function(data) {
         var map = this.state.stops.get(data.routeId + '_' + data.stopId);
         var stops;
 
@@ -51,8 +46,8 @@ var Application = React.createClass({
         this.state.stops = stops;
         this.setState(this.state);
     },
-    handleAdd: function(stopId) {
-
+    handleAdd: function(stopId, routeId) {
+        this.socket.emit('follow_stop', {stop: stopId, routeId: routeId});
     },
     render: function() {
         return (
