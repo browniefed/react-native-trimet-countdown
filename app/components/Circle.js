@@ -35,7 +35,6 @@ var styles = StyleSheet.create({
         borderRadius: 15,
         width: 30,
         height: 30,
-        margin: 2,
         alignItems: 'center',
         justifyContent: 'center'
     }

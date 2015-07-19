@@ -46,27 +46,25 @@ var HomeView = React.createClass({
         this.setState({
             value: text
         });
+    },
+    handleSearch: function() {
+        if ((this.state.value || '').length > 1) {
 
-        LayoutAnimation.configureNext(LayoutAnimation.Presets.spring);
-
-        if ((text || '').length > 1) {
             this.setState({
                 loading: true
-            })
-            Api.search(text).then(_.bind(function(json) {
+            });
+
+            Api.search(this.state.value).then(_.bind(function(json) {
                 this.setState({
                     results: json,
                     loading: false
                 });
-            }, this)).catch(function(err) {
-
-            })
+            }, this)).catch(_.bind(function(err) {
+                this.setState({
+                    loading: false
+                })
+            }, this));
         } 
-        
-        if ((text || '').length === 0) {
-            this.refs.add_route.blur();
-        }
-        
     },
     addStopAndRoute: function(stopId, routeId) {
         this.props.onAdd(stopId, routeId);
@@ -92,24 +90,30 @@ var HomeView = React.createClass({
 
         if (!_.isEmpty(this.state.results) && this.state.value) {
             return (
-                <View style={[styles.lower]} key="results">
-                    <Text style={styles.title}>{this.state.results.desc}</Text>
-                    <ScrollView>
-                        <View style={styles.results}>
-                            {
-                                _.map(this.state.results.routes, function(route) {
-                                    return (
-                                        <RouteButton 
-                                            onPress={this.addStopAndRoute}
-                                            locid={this.state.results.locid}
-                                            route={route}
-                                        />
-                                    )
-                                }, this)
-                            }
-                        </View>
-                    </ScrollView>
-                </View>
+                <ScrollView style={styles.lower}>
+                    {
+                        _.map(this.state.results, function(result) {
+                            return (
+                                <View>
+                                    <Text style={styles.title}>{result.desc}</Text>
+                                        <View style={styles.results}>
+                                            {
+                                                _.map(result.routes, function(route) {
+                                                    return (
+                                                        <RouteButton 
+                                                            onPress={this.addStopAndRoute}
+                                                            locid={result.locid}
+                                                            route={route}
+                                                        />
+                                                    )
+                                                }, this)
+                                            }
+                                        </View>
+                                </View>
+                            );
+                        }, this)
+                    }
+                </ScrollView>
             )
 
         }
@@ -130,8 +134,9 @@ var HomeView = React.createClass({
                         ref="add_route"
                         onAdd={this.props.onAdd}
                         onChangeText={this.handleChangeText}
+                        onSubmitEditing={this.handleSearch}
                         value={this.state.value}
-                        placeholder="Search by Stop ID"
+                        placeholder="Search by Stop ID or Name"
                         returnKeyType="search"
                     />
                 </View>

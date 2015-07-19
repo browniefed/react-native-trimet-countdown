@@ -37,7 +37,8 @@ var PositionCircles = React.createClass({
 var styles = StyleSheet.create({
     circles: {
         flex: 1,
-        alignItems: 'flex-start',
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
         flexDirection: 'row',
         flexWrap: 'nowrap'
     }
