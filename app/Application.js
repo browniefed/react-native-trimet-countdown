@@ -60,11 +60,18 @@ var Application = React.createClass({
             route: routeId
         });
     },
+    getStops: function() {
+        var stops = this.state.stops.toJS();
+
+        return _.sortBy(stops, function(stop) {
+            return stop.stopId;
+        });
+    },
     render: function() {
         return (
             <View style={styles.container}>
                 <HomeView 
-                    stops={this.state.stops.toJS()} 
+                    stops={this.getStops()} 
                     onAdd={this.handleAdd}
                 />
             </View>
