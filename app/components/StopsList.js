@@ -38,7 +38,8 @@ var StopsList = React.createClass({
 
 var styles = StyleSheet.create({
     list: {
-        flex: 1
+        flex: 1,
+        padding: 5
     }
 })
 
