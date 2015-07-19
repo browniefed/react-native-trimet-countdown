@@ -17,6 +17,7 @@ var {
     Navigator,
 } = React;
 
+
 var Application = React.createClass({
     getInitialState: function() {
         return {
