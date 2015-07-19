@@ -12,8 +12,9 @@ var PositionCard = React.createClass({
         return {
             name: '',
             stopId: '',
-            position: -1,
-            circleColor: '#000'
+            position: [],
+            circleColor: '#000',
+            routeId: ''
         };
     },
     render: function() {
@@ -22,6 +23,7 @@ var PositionCard = React.createClass({
                 <PositionTitle 
                     name={this.props.name} 
                     id={this.props.stopId} 
+                    route={this.props.routeId}
                 />
                 <PositionCircles
                     circleColor={this.props.circleColor}
@@ -34,7 +36,8 @@ var PositionCard = React.createClass({
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        flexDirection: 'column'
     }
 })
 

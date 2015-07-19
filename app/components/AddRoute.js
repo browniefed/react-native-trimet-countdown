@@ -1,5 +1,5 @@
 var React = require('react-native');
-
+var _ = require('lodash');
 var {
     View,
     Text,
@@ -14,14 +14,17 @@ var AddRoute = React.createClass({
             onChangeText: function() {}
         };
     },
-
+    blur: function() {
+        this.refs.input.blur();
+    },
     render: function() {
         return (
             <View style={styles.container}>
                 <View style={styles.inputWrap}>
                     <TextInput 
+                        ref="input"
                         style={styles.input}
-                        {...this.props}
+                        {..._.omit(this.props, 'ref')}
                     />
                 </View>
             </View>
@@ -36,11 +39,11 @@ var styles = StyleSheet.create({
         justifyContent: 'center'
     },
     inputWrap: {
-        flex: 1
+        flex: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: '#CCC'
     },
     input: {
-        borderColor: '#000',
-        borderWidth: 1,
         flex: 1,
         padding: 5
     }

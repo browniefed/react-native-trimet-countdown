@@ -4,14 +4,15 @@ var StopMap = require('../StopMap');
 
 var {
     View,
-    ListView
+    ListView,
+    StyleSheet
 } = React;
 
 var StopsList = React.createClass({
 
     renderRow(rowData, sectionID, rowID) {
         var circleColor;
-        
+
         if (StopMap[rowData.routeId]) {
             circleColor = StopMap[rowData.routeId].color;
         }
@@ -27,12 +28,18 @@ var StopsList = React.createClass({
         return (
             <ListView 
                 dataSource={this.props.dataSource}
-                style={[this.props.style, {height: 100}]}
+                style={styles.list}
                 renderRow={this.renderRow}
             />
         );
     }
 
 });
+
+var styles = StyleSheet.create({
+    list: {
+        flex: 1
+    }
+})
 
 module.exports = StopsList;

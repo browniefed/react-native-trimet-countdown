@@ -1,19 +1,36 @@
 var React = require('react-native');
 var {
     View,
-    Text
+    Text,
+    StyleSheet
 } = React;
 
 var PositionTitle = React.createClass({
-
+    getDefaultProps: function() {
+        return {
+            id: '',
+            name: '',
+            route: ''
+        };
+    },
     render: function() {
         return (
-            <View>
-                <Text>{this.props.id} - {this.props.name}</Text>
+            <View style={styles.view}>
+                <Text style={styles.text}>Route {this.props.route} - {this.props.id} - {this.props.name}</Text>
             </View>
         );
     }
 
 });
+
+var styles = StyleSheet.create({
+    view: {
+        flex: 1
+    },
+    text: {
+        fontSize: 12,
+        fontWeight: 'bold'
+    }
+})
 
 module.exports = PositionTitle;

@@ -17,8 +17,10 @@ var PositionCircles = React.createClass({
         return _.map(_.range(0,8).reverse(), function(v) {
             return (
                 <Circle 
+                    key={v}
                     filled={_.contains(position, v)}
                     circleColor={color}
+                    position={v}
                 />
             )
         });

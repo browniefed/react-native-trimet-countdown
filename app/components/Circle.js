@@ -1,7 +1,8 @@
 var React = require('react-native');
 var {
     View,
-    StyleSheet
+    StyleSheet,
+    Text
 } = React;
 
 var Circle = React.createClass({
@@ -21,7 +22,9 @@ var Circle = React.createClass({
     },
     render: function() {
         return (
-            <View style={[styles.circle, this.getFill()]} />
+            <View style={[styles.circle, this.getFill()]}>
+                <Text style={{color: this.props.filled ? '#FFF' : '#DDD'}}>{(this.props.position + 1)}</Text>
+            </View>
         );
     }
 
@@ -30,11 +33,11 @@ var Circle = React.createClass({
 var styles = StyleSheet.create({
     circle: {
         borderRadius: 15,
-        borderWidth: 5,
-        borderColor: '#f9f9f9',
         width: 30,
         height: 30,
-        margin: 2
+        margin: 2,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 
