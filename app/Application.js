@@ -65,7 +65,7 @@ var Application = React.createClass({
         var stops = this.state.stops.toJS();
 
         return _.sortBy(stops, function(stop) {
-            return stop.stopId;
+            return +stop.stopId;
         });
     },
     render: function() {
