@@ -9,7 +9,9 @@ var {
 } = React;
 
 var StopsList = React.createClass({
-
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return nextProps.dataSource != this.props.dataSource;
+    },
     renderRow(rowData, sectionID, rowID) {
         var circleColor;
 
