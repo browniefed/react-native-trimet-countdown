@@ -3,6 +3,7 @@ var PositionCard = require('./../components/PositionCard');
 var AddRoute = require('./../components/AddRoute');
 var StopsList = require('./../components/StopsList');
 var RouteButton = require('./../components/RouteButton');
+var EmptyStops = require('./../components/EmptyStops');
 
 var Api = require('../Api');
 var _ = require('lodash');
@@ -22,7 +23,7 @@ var {
 var HomeView = React.createClass({
     getDefaultProps: function() {
         return {
-            stops: {},
+            stops: null,
             onAdd: function() {}
         };
     },
@@ -50,9 +51,15 @@ var HomeView = React.createClass({
         this.setState({
             value: text
         });
+
+        if (!text) {
+            this.setState({
+                results: null
+            })
+        }
     },
     handleSearch: function() {
-        if ((this.state.value || '').length > 1) {
+        if ((this.state.value || '').length > 0) {
 
             this.setState({
                 loading: true
@@ -80,6 +87,14 @@ var HomeView = React.createClass({
 
     },
     getLowerView: function() {
+
+        if (this.props.stops !== null && _.isEmpty(this.props.stops) && _.isEmpty(this.state.results)) {
+            return (
+                <View style={styles.centerAll}>
+                    <EmptyStops />
+                </View>
+            )
+        }
 
         if (this.state.loading) {
             return (
@@ -133,6 +148,7 @@ var HomeView = React.createClass({
     render: function() {
         return (
             <View style={styles.container}>
+                {this.getLowerView()}
                 <View style={styles.addRoute}>
                     <AddRoute 
                         ref="add_route"
@@ -144,7 +160,6 @@ var HomeView = React.createClass({
                         returnKeyType="search"
                     />
                 </View>
-                {this.getLowerView()}
             </View>
         );
     }
@@ -156,10 +171,22 @@ var styles = StyleSheet.create({
         flex: 1,
         paddingTop: 50
     },
-    addRoute: {
+    centerAll: {
         flex: 1,
-        flexDirection: 'row',
-        marginBottom: 10,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    addRoute: {
+        height: 60,
+        paddingTop: 20,
+        backgroundColor: '#3A9DC4',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        borderBottomWidth: 2,
+        borderBottomColor: '#3288aa'
     },
     title: {
         fontSize: 20,
@@ -173,7 +200,8 @@ var styles = StyleSheet.create({
         flex: 1
     },
     lower: {
-        flex: 15,
+        flex: 1,
+        marginTop: 10,
         flexDirection: 'column'
     },
     center: {

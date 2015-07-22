@@ -40,7 +40,8 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
         paddingLeft: 10,
         paddingRight: 10,
-        marginBottom: 5
+        marginBottom: 5,
+        marginTop: 5
     }
 })
 

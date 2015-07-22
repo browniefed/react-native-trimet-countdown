@@ -40,9 +40,9 @@ var Circle = React.createClass({
 
 var styles = StyleSheet.create({
     circle: {
-        borderRadius: 8,
-        width: 16,
-        height: 16,
+        borderRadius: 15,
+        width: 30,
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
         overflow: 'hidden'

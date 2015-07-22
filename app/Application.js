@@ -30,6 +30,8 @@ var Application = React.createClass({
         this.socket.on('postion_update', this.updateStopInfo);
         this.socket.on('stop_info', this.updateStopInfo);
 
+
+        // Storage.saveStops([]);
         Storage.getStops(_.bind(function(_stops) {
             var stops = _stops || [];
             _.each(stops, function(stop) {

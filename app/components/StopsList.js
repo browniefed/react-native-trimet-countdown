@@ -58,6 +58,11 @@ var styles = StyleSheet.create({
         fontSize: 14,
         color: '#555'
     },
+    seperator: {
+        height: 2,
+        flex: 1,
+        flexDirection: 'row',
+    },
     header: {
         paddingTop: 10,
         paddingBottom: 10,
