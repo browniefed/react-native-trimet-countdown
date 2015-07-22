@@ -31,7 +31,7 @@ var Circle = React.createClass({
     render: function() {
         return (
             <View style={[styles.circle, this.getFill()]}>
-                <Text style={{color: this.props.filled ? '#FFF' : '#DDD'}}>{(this.getPosition())}</Text>
+                <Text style={{color: this.props.filled ? '#FFF' : '#DDD', fontSize: 10}}>{(this.getPosition())}</Text>
             </View>
         );
     }
@@ -40,11 +40,12 @@ var Circle = React.createClass({
 
 var styles = StyleSheet.create({
     circle: {
-        borderRadius: 15,
-        width: 30,
-        height: 30,
+        borderRadius: 8,
+        width: 16,
+        height: 16,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        overflow: 'hidden'
     }
 });
 

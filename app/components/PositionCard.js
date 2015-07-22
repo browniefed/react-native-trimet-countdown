@@ -37,7 +37,10 @@ var PositionCard = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        paddingLeft: 10,
+        paddingRight: 10,
+        marginBottom: 5
     }
 })
 

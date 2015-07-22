@@ -27,9 +27,13 @@ var HomeView = React.createClass({
         };
     },
     getInitialState: function() {
-        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var ds = new ListView.DataSource({
+            rowHasChanged: (r1, r2) => r1 !== r2,
+            sectionHeaderHasChanged: (r1, r2) => r1 !== r2
+        });
+
         return {
-          dataSource: ds.cloneWithRows(this.props.stops),
+          dataSource: ds.cloneWithRowsAndSections(this.props.stops),
           value: '',
           results: {}
         };
@@ -39,7 +43,7 @@ var HomeView = React.createClass({
     },
     componentWillReceiveProps: function(nextProps) {
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(nextProps.stops)
+            dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.stops)
         });
     },
     handleChangeText: function(text) {
@@ -150,13 +154,12 @@ var styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         flex: 1,
-        padding: 20,
         paddingTop: 50
     },
     addRoute: {
         flex: 1,
         flexDirection: 'row',
-        marginBottom: 20
+        marginBottom: 10,
     },
     title: {
         fontSize: 20,

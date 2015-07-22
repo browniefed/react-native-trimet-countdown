@@ -16,7 +16,7 @@ var PositionTitle = React.createClass({
     render: function() {
         return (
             <View style={styles.view}>
-                <Text style={styles.text}>Route {this.props.route} - {this.props.id} - {this.props.name}</Text>
+                <Text style={styles.text}>{this.props.name}</Text>
             </View>
         );
     }
@@ -28,8 +28,7 @@ var styles = StyleSheet.create({
         flex: 1
     },
     text: {
-        fontSize: 12,
-        fontWeight: 'bold'
+        fontSize: 12
     }
 })
 

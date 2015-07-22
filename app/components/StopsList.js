@@ -1,11 +1,13 @@
 var React = require('react-native');
 var PositionCard = require('./PositionCard');
 var StopMap = require('../StopMap');
+var _ = require('lodash');
 
 var {
     View,
     ListView,
-    StyleSheet
+    StyleSheet,
+    Text
 } = React;
 
 var StopsList = React.createClass({
@@ -14,6 +16,7 @@ var StopsList = React.createClass({
     },
     renderRow(rowData, sectionID, rowID) {
         var circleColor;
+
 
         if (StopMap[rowData.routeId]) {
             circleColor = StopMap[rowData.routeId].color;
@@ -26,12 +29,21 @@ var StopsList = React.createClass({
             />
         )
     },
+    renderSectionHeader(headerData) {
+        return (
+                <View style={styles.header}>
+                    <Text style={styles.headerText}>{_.first(headerData).stopName}</Text>
+                </View>
+            );
+    },
     render: function() {
         return (
             <ListView 
+                automaticallyAdjustContentInsets={false}
                 dataSource={this.props.dataSource}
                 style={styles.list}
                 renderRow={this.renderRow}
+                renderSectionHeader={this.renderSectionHeader}
             />
         );
     }
@@ -40,8 +52,17 @@ var StopsList = React.createClass({
 
 var styles = StyleSheet.create({
     list: {
-        flex: 1,
-        padding: 5
+        flex: 1
+    },
+    headerText: {
+        fontSize: 14,
+        color: '#555'
+    },
+    header: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingLeft: 5,
+        backgroundColor: '#EEEEEE'
     }
 })
 

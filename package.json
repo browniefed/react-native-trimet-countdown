@@ -8,7 +8,7 @@
   "dependencies": {
     "immutable": "^3.7.4",
     "lodash": "^3.10.0",
-    "react-native": "facebook/react-native#0.8-stable",
+    "react-native": "^0.8.0-rc.2",
     "socket.io-client": "^1.3.5",
     "superagent": "^1.2.0"
   }
