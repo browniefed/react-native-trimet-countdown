@@ -30,7 +30,7 @@ var EmptyResults = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: -64,
+        marginTop: -114,
         alignItems: 'center',
         justifyContent: 'center'
     },
