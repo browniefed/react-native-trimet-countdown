@@ -42,7 +42,7 @@ var styles = StyleSheet.create({
     text: {
         fontSize: 15,
         color: '#333',
-        textAlign: 'center'
+        textAlign: 'center',
     }
 })
 

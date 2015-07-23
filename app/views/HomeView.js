@@ -54,8 +54,6 @@ var HomeView = React.createClass({
             value: text
         });
 
-        console.log('change text triggered');
-
         if (!text) {
             this.setState({
                 results: null,
@@ -70,20 +68,17 @@ var HomeView = React.createClass({
                 loading: true
             });
 
-            console.log('start');
 
             Api.search(this.state.value).then(_.bind(function(json) {
-                console.log('here');
-                console.log(json);
                 this.setState({
                     results: json,
                     search: true,
                     loading: false
                 });
             }, this)).catch(_.bind(function(err) {
-                console.log('here2');
                 this.setState({
-                    loading: false
+                    loading: false,
+                    search: false
                 })
             }, this));
         } 

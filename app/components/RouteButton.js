@@ -13,7 +13,7 @@ var {
 var RouteButton = React.createClass({
     getDefaultProps: function() {
         return {
-            onPress: function() {}
+            onPress: function() {},
         };
     },
     componentWillMount: function() {

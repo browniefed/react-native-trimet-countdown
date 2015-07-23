@@ -17,7 +17,7 @@ var EmptyStops = React.createClass({
     render: function() {
         return (
             <TouchableOpacity onPress={this.props.onViewPress} activeOpacity={.8}>
-                <View>
+                <View style={styles.container}>
                     <Image style={styles.image} source={require('image!busblade')} />
                     <Text style={[styles.text, styles.titleText]}>You don't have any stops!</Text>
                     <Text style={[styles.text, styles.bottomText]}>Try searching or finding stops near you.</Text>
@@ -29,6 +29,9 @@ var EmptyStops = React.createClass({
 });
 
 var styles = StyleSheet.create({
+    container: {
+        marginTop: 50
+    },
     image: {
         height: 225,
         width: 100,
@@ -38,12 +41,12 @@ var styles = StyleSheet.create({
         fontSize: 25,
         fontWeight: 'bold',
         marginBottom: 20,
-        color: '#333'
+        color: '#333',
     },
     bottomText: {
         width: 200,
         alignSelf: 'center',
-        color: '#AAA'
+        color: '#AAA',
     },
     text: {
         textAlign: 'center'
