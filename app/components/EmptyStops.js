@@ -11,12 +11,12 @@ var {
 var EmptyStops = React.createClass({
     getDefaultProps: function() {
         return {
-            onViewPressed: function() {}
+            onViewPress: function() {}
         };
     },
     render: function() {
         return (
-            <TouchableOpacity onPress={this.props.onViewPressed} activeOpacity={.8}>
+            <TouchableOpacity onPress={this.props.onViewPress} activeOpacity={.8}>
                 <View>
                     <Image style={styles.image} source={require('image!busblade')} />
                     <Text style={[styles.text, styles.titleText]}>You don't have any stops!</Text>

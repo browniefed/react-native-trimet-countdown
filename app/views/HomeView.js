@@ -101,20 +101,17 @@ var HomeView = React.createClass({
     },
     getLowerView: function() {
 
-        console.log(this.state.search);
-        console.log(_.isEmpty(this.state.results));
-
         if (this.state.value && _.isEmpty(this.state.results) && this.state.search) {
             return (
                 <View style={styles.centerAll}>
-                    <EmptyResults />
+                    <EmptyResults onViewPress={this.handleEmptyViewPress} />
                 </View>
             )
         }
         if (this.props.stops !== null && _.isEmpty(this.props.stops) && _.isEmpty(this.state.results)) {
             return (
                 <View style={styles.centerAll}>
-                    <EmptyStops onViewPressed={this.handleEmptyViewPress} />
+                    <EmptyStops onViewPress={this.handleEmptyViewPress} />
                 </View>
             )
         }
