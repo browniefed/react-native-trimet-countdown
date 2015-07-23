@@ -4,6 +4,7 @@ var AddRoute = require('./../components/AddRoute');
 var StopsList = require('./../components/StopsList');
 var RouteButton = require('./../components/RouteButton');
 var EmptyStops = require('./../components/EmptyStops');
+var EmptyResults = require('./../components/EmptyResults');
 
 var Api = require('../Api');
 var _ = require('lodash');
@@ -36,7 +37,8 @@ var HomeView = React.createClass({
         return {
           dataSource: ds.cloneWithRowsAndSections(this.props.stops),
           value: '',
-          results: {}
+          results: {},
+          search: false
         };
     },
     componentWillMount: function() {
@@ -52,9 +54,12 @@ var HomeView = React.createClass({
             value: text
         });
 
+        console.log('change text triggered');
+
         if (!text) {
             this.setState({
-                results: null
+                results: null,
+                search: false
             })
         }
     },
@@ -65,12 +70,18 @@ var HomeView = React.createClass({
                 loading: true
             });
 
+            console.log('start');
+
             Api.search(this.state.value).then(_.bind(function(json) {
+                console.log('here');
+                console.log(json);
                 this.setState({
                     results: json,
+                    search: true,
                     loading: false
                 });
             }, this)).catch(_.bind(function(err) {
+                console.log('here2');
                 this.setState({
                     loading: false
                 })
@@ -84,14 +95,26 @@ var HomeView = React.createClass({
             value: ''
         });
         this.refs.add_route.blur();
-
+    },
+    handleEmptyViewPress: function() {
+        this.refs.add_route.focus();
     },
     getLowerView: function() {
 
+        console.log(this.state.search);
+        console.log(_.isEmpty(this.state.results));
+
+        if (this.state.value && _.isEmpty(this.state.results) && this.state.search) {
+            return (
+                <View style={styles.centerAll}>
+                    <EmptyResults />
+                </View>
+            )
+        }
         if (this.props.stops !== null && _.isEmpty(this.props.stops) && _.isEmpty(this.state.results)) {
             return (
                 <View style={styles.centerAll}>
-                    <EmptyStops />
+                    <EmptyStops onViewPressed={this.handleEmptyViewPress} />
                 </View>
             )
         }
@@ -173,9 +196,8 @@ var styles = StyleSheet.create({
     },
     centerAll: {
         flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center'
+        paddingTop: 50,
+        alignItems: 'center'
     },
     addRoute: {
         height: 60,
