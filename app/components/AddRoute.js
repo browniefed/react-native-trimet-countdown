@@ -36,6 +36,7 @@ var AddRoute = React.createClass({
                     <View style={styles.inputAbsolute}>
                         <TextInput 
                             ref="input"
+                            clearButtonMode="always"
                             style={styles.input}
                             placeholderTextColor="#FFF"
                             {..._.omit(this.props, 'ref')}
@@ -93,7 +94,7 @@ var styles = StyleSheet.create({
         position: 'absolute',
         top: 5,
         left: 34,
-        right: 34,
+        right: 39,
     },
     input: {
         padding: 5,

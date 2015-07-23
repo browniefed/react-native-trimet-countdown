@@ -2,9 +2,9 @@ var React = require('react-native');
 var PositionCard = require('./../components/PositionCard');
 var AddRoute = require('./../components/AddRoute');
 var StopsList = require('./../components/StopsList');
-var RouteButton = require('./../components/RouteButton');
 var EmptyStops = require('./../components/EmptyStops');
 var EmptyResults = require('./../components/EmptyResults');
+var SearchResults = require('./../components/SearchResults');
 
 var Api = require('../Api');
 var _ = require('lodash');
@@ -100,62 +100,59 @@ var HomeView = React.createClass({
         this.refs.add_route.focus();
     },
     getLowerView: function() {
+        if (this.state.loading) {
+            return this.getLoading()
+        }
 
         if (this.state.value && _.isEmpty(this.state.results) && this.state.search) {
-            return (
-                <View style={styles.centerAll}>
-                    <EmptyResults onViewPress={this.handleEmptyViewPress} />
-                </View>
-            )
+            return this.getEmptyResults();
         }
+
         if (this.props.stops !== null && _.isEmpty(this.props.stops) && _.isEmpty(this.state.results)) {
-            return (
-                <View style={styles.centerAll}>
-                    <EmptyStops onViewPress={this.handleEmptyViewPress} />
-                </View>
-            )
+            return this.getEmptyStops();
         }
-
-        if (this.state.loading) {
-            return (
-                    <View style={[styles.lower, styles.center]}>
-                        <ActivityIndicatorIOS 
-                            animating={true} 
-                            size="large"
-                        />
-                    </View>
-            );
-        }
-
+        
         if (!_.isEmpty(this.state.results) && this.state.value) {
-            return (
-                <ScrollView style={styles.lower}>
-                    {
-                        _.map(this.state.results, function(result) {
-                            return (
-                                <View>
-                                    <Text style={styles.title}>{result.desc}</Text>
-                                        <View style={styles.results}>
-                                            {
-                                                _.map(result.routes, function(route) {
-                                                    return (
-                                                        <RouteButton 
-                                                            onPress={this.addStopAndRoute}
-                                                            locid={result.locid}
-                                                            route={route}
-                                                        />
-                                                    )
-                                                }, this)
-                                            }
-                                        </View>
-                                </View>
-                            );
-                        }, this)
-                    }
-                </ScrollView>
-            )
-
+            return this.getSearchResults();
         }
+
+        return this.getStopList();
+    },
+    getEmptyResults: function() {
+        return (
+            <View style={styles.centerAll}>
+                <EmptyResults onViewPress={this.handleEmptyViewPress} />
+            </View>
+        )
+    },
+    getEmptyStops: function() {
+        return (
+            <View style={styles.centerAll}>
+                <EmptyStops onViewPress={this.handleEmptyViewPress} />
+            </View>
+        )
+    },
+    getLoading: function() {
+        return (
+            <View style={[styles.lower, styles.center]}>
+                <ActivityIndicatorIOS 
+                    animating={true} 
+                    size="large"
+                />
+            </View>
+        );
+    },
+    getSearchResults: function() {
+        return (
+            <View style={styles.lower}>
+                <SearchResults
+                    addStopAndRoute={this.addStopAndRoute}
+                    results={this.state.results}
+                />
+            </View>
+        )
+    },
+    getStopList: function() {
 
         return (
                 <View style={styles.lower} key="active_stops">
@@ -207,14 +204,7 @@ var styles = StyleSheet.create({
         borderBottomWidth: 2,
         borderBottomColor: '#3288aa'
     },
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    results: {
-        flexDirection: 'column',
-        flex: 1
-    },
+
     stops: {
         flex: 1
     },
